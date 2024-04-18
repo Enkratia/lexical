@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 
-// import { Hero } from "../components";
+import { AddPostBlock, Lexical, App } from "../components";
 
 import cs from "../scss/helpers.module.scss";
 
@@ -14,7 +14,9 @@ const Home: React.FC = () => {
     <main>
       <h1 className={cs.srOnly}></h1>
 
-      {/* <Hero /> */}
+      {/* <AddPostBlock /> */}
+      {/* <Lexical /> */}
+      <App />
     </main>
   );
 };

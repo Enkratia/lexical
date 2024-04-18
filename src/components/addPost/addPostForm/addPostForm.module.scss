@@ -1,0 +1,23 @@
+@use "../../../scss/utils/" as *;
+
+.root {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: rem(20);
+
+  >div {
+    &:nth-last-child(2) {
+      margin-bottom: rem(10);
+    }
+  }
+}
+
+.upload {
+  &Wrapper {
+    width: max-content;
+
+    >&::after {
+      content: none;
+    }
+  }
+}

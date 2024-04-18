@@ -1,0 +1,114 @@
+/* stylelint-disable order/order */
+/* stylelint-disable selector-combinator-space-after */
+/* stylelint-disable selector-combinator-space-before */
+@use "../../scss/utils/" as *;
+
+.root {
+  border-color: var(--black-color);
+
+  &:focus-within {
+    border-color: var(--black-color);
+  }
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-color: inherit;
+  border-bottom: 0;
+  border-bottom-right-radius: initial;
+  border-bottom-left-radius: initial;
+  transition: border-color 0.3s;
+
+  // **
+  >div {
+    display: inline-flex;
+    column-gap: rem(12);
+    flex-wrap: wrap;
+
+    &:first-child {
+      margin-right: rem(30);
+    }
+
+    &:last-child {
+      justify-content: flex-end;
+    }
+  }
+
+  button {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    outline: none;
+    border: none;
+    border-radius: rem(4);
+    padding: rem(8);
+    background-color: transparent;
+    transition: background-color 0.3s;
+    cursor: pointer;
+
+    >svg {
+      width: rem(20);
+      height: rem(20);
+      stroke: var(--black-color);
+    }
+
+    &[class*="is-active"] {
+      background-color: #ececec;
+    }
+
+    &:hover {
+      background-color: #ececec;
+    }
+
+    &:active {
+      background-color: #d3d3d3;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  }
+
+  @include bp-down("678") {
+    padding-right: rem(24);
+  }
+}
+
+.content {
+  border-color: inherit;
+  border-top-left-radius: initial;
+  border-top-right-radius: initial;
+  min-height: rem(280);
+  transition: border-color 0.3s;
+  cursor: text;
+
+  >div {
+    outline: none;
+  }
+
+  // test
+  [class="column-block"] {
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 24px;
+    padding: 8px 0;
+  }
+
+  [class="column"] {
+    overflow: auto;
+    margin: -8px;
+    border: 1px gray dashed;
+    border-radius: 8px;
+    padding: 8px;
+  }
+
+  p {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
