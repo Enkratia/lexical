@@ -2,13 +2,25 @@
   font-weight: bold;
   font-size: 14px;
   color: #777;
-  border-radius: 5px;
   border-color: grey;
+  border: 1px solid #dfdfdf;
+  border-color: transparent;
+  border-radius: 4px;
   height: 21px;
-  margin-top: 5px;
+  margin-top: 4px;
   padding: 2px 4px;
   text-align: center;
   width: 20px;
+  background-color: transparent;
+  transition: background-color 0.3s;
+}
+
+.font-size-input:hover {
+  background-color: #f0f0f0 !important;
+}
+
+.font-size-input:focus {
+  outline: 1px solid #ddd;
 }
 
 input[type='number']::-webkit-outer-spin-button,

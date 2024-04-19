@@ -1,26 +1,28 @@
 "use client";
 
-import { $createLinkNode } from "@lexical/link";
-import { $createListItemNode, $createListNode } from "@lexical/list";
+// import { $createLinkNode } from "@lexical/link";
+// import { $createListItemNode, $createListNode } from "@lexical/list";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
-import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
-import { $createParagraphNode, $createTextNode, $getRoot } from "lexical";
+// import { $createHeadingNode, $createQuoteNode } from "@lexical/rich-text";
+// import { $createParagraphNode, $createTextNode, $getRoot } from "lexical";
 import * as React from "react";
 
-import { isDevPlayground } from "./appSettings";
-import { SettingsContext, useSettings } from "./context/SettingsContext";
+// import { isDevPlayground } from "./appSettings";
+// import { SettingsContext, useSettings } from "./context/SettingsContext";
+import { useSettings } from "./context/SettingsContext";
 import { SharedAutocompleteContext } from "./context/SharedAutocompleteContext";
 import { SharedHistoryContext } from "./context/SharedHistoryContext";
 import Editor from "./Editor";
 import logo from "./images/logo.svg";
 import PlaygroundNodes from "./nodes/PlaygroundNodes";
-import DocsPlugin from "./plugins/DocsPlugin";
-import PasteLogPlugin from "./plugins/PasteLogPlugin";
+// import DocsPlugin from "./plugins/DocsPlugin";
+// import PasteLogPlugin from "./plugins/PasteLogPlugin";
 import { TableContext } from "./plugins/TablePlugin";
-import TestRecorderPlugin from "./plugins/TestRecorderPlugin";
-import TypingPerfPlugin from "./plugins/TypingPerfPlugin";
-import Settings from "./Settings";
+// import TestRecorderPlugin from "./plugins/TestRecorderPlugin";
+// import TypingPerfPlugin from "./plugins/TypingPerfPlugin";
+// import Settings from "./Settings";
 import PlaygroundEditorTheme from "./themes/PlaygroundEditorTheme";
+import HtmlPlugin from "./plugins/HTMLPlugin";
 
 console.warn(
   "If you are profiling the playground app, please ensure you turn off the debug view. You can disable it by pressing on the settings control in the bottom-left of your screen and toggling the debug view setting.",
@@ -108,7 +110,17 @@ export function App(): JSX.Element {
   } = useSettings();
 
   const initialConfig = {
-    editorState: isCollab ? null : emptyEditor ? undefined : "",
+    // editorState: isCollab ? null : emptyEditor ? undefined : "",
+    // editorState: () => console.log("test"),
+    // editorState: (editor) => {
+    //   editor.update(() => {
+    //     console.log("hello");
+    //     // const parser = new DOMParser();
+    //     // const dom = parser.parseFromString(htmlString, ‘text/html’);
+    //     // const nodes = $generateNodesFromDOM(editor, dom);
+    //     // $insertNodes(nodes);
+    //   });
+    // },
     //  : prepopulatedRichText,
     namespace: "Playground",
     nodes: [...PlaygroundNodes],
@@ -140,6 +152,10 @@ export function App(): JSX.Element {
           </SharedAutocompleteContext>
         </TableContext>
       </SharedHistoryContext>
+      <HtmlPlugin
+        onHtmlChanged={(html) => console.log(html)}
+        initialHtml="<h1>Test</h1><p>Lorem ipsum dolor sit amet</p>"
+      />
     </LexicalComposer>
   );
 }

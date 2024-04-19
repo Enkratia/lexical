@@ -180,7 +180,7 @@ export default function ExcalidrawComponent({
             files={files}
             appState={appState}
           />
-          {isSelected && (
+          {/* {isSelected && (
             <div
               className="image-edit-button"
               role="button"
@@ -188,7 +188,7 @@ export default function ExcalidrawComponent({
               onMouseDown={(event) => event.preventDefault()}
               onClick={openModal}
             />
-          )}
+          )} */}
           {(isSelected || isResizing) && (
             <ImageResizer
               buttonRef={captionButtonRef}

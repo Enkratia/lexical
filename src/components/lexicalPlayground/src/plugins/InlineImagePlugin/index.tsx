@@ -61,7 +61,7 @@ export function InsertInlineImageDialog({
   const [src, setSrc] = useState("");
   const [altText, setAltText] = useState("");
   const [showCaption, setShowCaption] = useState(false);
-  const [position, setPosition] = useState<Position>("left");
+  const [position, setPosition] = useState<Position>("full");
 
   const isDisabled = src === "";
 
@@ -113,7 +113,7 @@ export function InsertInlineImageDialog({
           data-test-id="image-modal-file-upload"
         />
       </div>
-      <div style={{ marginBottom: "1em" }}>
+      {/* <div style={{ marginBottom: "1em" }}>
         <TextInput
           label="Alt Text"
           placeholder="Descriptive alternative text"
@@ -121,20 +121,20 @@ export function InsertInlineImageDialog({
           value={altText}
           data-test-id="image-modal-alt-text-input"
         />
-      </div>
+      </div> */}
 
-      <Select
+      {/* <Select
         style={{ marginBottom: "1em", width: "290px" }}
         label="Position"
         name="position"
         id="position-select"
         onChange={handlePositionChange}>
-        <option value="left">Left</option>
-        <option value="right">Right</option>
-        <option value="full">Full Width</option>
-      </Select>
+        <option value="full">Full Width</option> */}
+      {/* <option value="left">Left</option>
+        <option value="right">Right</option> */}
+      {/* </Select> */}
 
-      <div className="Input__wrapper">
+      {/* <div className="Input__wrapper">
         <input
           id="caption"
           className="InlineImageNode_Checkbox"
@@ -143,7 +143,7 @@ export function InsertInlineImageDialog({
           onChange={handleShowCaptionChange}
         />
         <label htmlFor="caption">Show Caption</label>
-      </div>
+      </div> */}
 
       <DialogActions>
         <Button
@@ -323,8 +323,8 @@ function getDragSelection(event: DragEvent): Range | null | undefined {
     target == null
       ? null
       : target.nodeType === 9
-      ? (target as Document).defaultView
-      : (target as Element).ownerDocument.defaultView;
+        ? (target as Document).defaultView
+        : (target as Element).ownerDocument.defaultView;
   const domSelection = getDOMSelection(targetWindow);
   if (document.caretRangeFromPoint) {
     range = document.caretRangeFromPoint(event.clientX, event.clientY);

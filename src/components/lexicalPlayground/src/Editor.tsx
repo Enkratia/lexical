@@ -20,7 +20,7 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { CAN_USE_DOM } from "../../shared/src/canUseDOM";
 
-import { createWebsocketProvider } from "./collaboration";
+// import { createWebsocketProvider } from "./collaboration";
 import { useSettings } from "./context/SettingsContext";
 import { useSharedHistoryContext } from "./context/SharedHistoryContext";
 import ActionsPlugin from "./plugins/ActionsPlugin";
@@ -90,8 +90,8 @@ export default function Editor(): JSX.Element {
   const text = isCollab
     ? "Enter some collaborative rich text..."
     : isRichText
-    ? "Enter some rich text..."
-    : "Enter some plain text...";
+      ? "Введите текст..."
+      : "Введите текст...";
   const placeholder = <Placeholder>{text}</Placeholder>;
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
   const [isSmallWidthViewport, setIsSmallWidthViewport] = useState<boolean>(false);
@@ -141,18 +141,19 @@ export default function Editor(): JSX.Element {
         <KeywordsPlugin />
         <SpeechToTextPlugin />
         <AutoLinkPlugin />
-        <CommentPlugin providerFactory={isCollab ? createWebsocketProvider : undefined} />
+        {/* <CommentPlugin providerFactory={isCollab ? createWebsocketProvider : undefined} /> */}
+
         {isRichText ? (
           <>
-            {isCollab ? (
+            {/* {isCollab ? (
               <CollaborationPlugin
                 id="main"
                 providerFactory={createWebsocketProvider}
                 shouldBootstrap={!skipCollaborationInit}
               />
-            ) : (
-              <HistoryPlugin externalHistoryState={historyState} />
-            )}
+            ) : ( */}
+            <HistoryPlugin externalHistoryState={historyState} />
+            {/* )} */}
             <RichTextPlugin
               contentEditable={
                 <div className="editor-scroller">
@@ -178,13 +179,13 @@ export default function Editor(): JSX.Element {
             <InlineImagePlugin />
             <LinkPlugin />
             <PollPlugin />
-            <TwitterPlugin />
+            {/* <TwitterPlugin />
             <YouTubePlugin />
-            <FigmaPlugin />
+            <FigmaPlugin /> */}
             <LexicalClickableLinkPlugin disabled={isEditable} />
             <HorizontalRulePlugin />
             <EquationsPlugin />
-            <ExcalidrawPlugin />
+            {/* <ExcalidrawPlugin /> */}
             <TabFocusPlugin />
             <TabIndentationPlugin />
             <CollapsiblePlugin />
@@ -200,10 +201,10 @@ export default function Editor(): JSX.Element {
                   setIsLinkEditMode={setIsLinkEditMode}
                 />
                 <TableCellActionMenuPlugin anchorElem={floatingAnchorElem} cellMerge={true} />
-                <FloatingTextFormatToolbarPlugin
+                {/* <FloatingTextFormatToolbarPlugin
                   anchorElem={floatingAnchorElem}
                   setIsLinkEditMode={setIsLinkEditMode}
-                />
+                /> */}
               </>
             )}
           </>
@@ -217,15 +218,16 @@ export default function Editor(): JSX.Element {
             <HistoryPlugin externalHistoryState={historyState} />
           </>
         )}
-        {(isCharLimit || isCharLimitUtf8) && (
+        {/* {(isCharLimit || isCharLimitUtf8) && (
           <CharacterLimitPlugin charset={isCharLimit ? "UTF-16" : "UTF-8"} maxLength={5} />
-        )}
+        )} */}
+        <CharacterLimitPlugin charset="UTF-8" maxLength={100000} />
         {isAutocomplete && <AutocompletePlugin />}
         <div>{showTableOfContents && <TableOfContentsPlugin />}</div>
         {shouldUseLexicalContextMenu && <ContextMenuPlugin />}
         <ActionsPlugin isRichText={isRichText} />
       </div>
-      {showTreeView && <TreeViewPlugin />}
+      {/* {showTreeView && <TreeViewPlugin />} */}
     </>
   );
 }

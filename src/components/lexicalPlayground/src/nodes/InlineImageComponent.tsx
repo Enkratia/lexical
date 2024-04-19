@@ -141,9 +141,9 @@ export function UpdateInlineImageDialog({
         name="position"
         id="position-select"
         onChange={handlePositionChange}>
+        <option value="full">Full Width</option>
         <option value="left">Left</option>
         <option value="right">Right</option>
-        <option value="full">Full Width</option>
       </Select>
 
       <div className="Input__wrapper">
@@ -189,6 +189,7 @@ export default function InlineImageComponent({
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
   const [editor] = useLexicalComposerContext();
+  console.log("text");
   const [selection, setSelection] = useState<BaseSelection | null>(null);
   const activeEditorRef = useRef<LexicalEditor | null>(null);
 
@@ -316,7 +317,7 @@ export default function InlineImageComponent({
     <Suspense fallback={null}>
       <>
         <div draggable={draggable}>
-          <button
+          {/* <button
             className="image-edit-button"
             ref={buttonRef}
             onClick={() => {
@@ -329,7 +330,7 @@ export default function InlineImageComponent({
               ));
             }}>
             Edit
-          </button>
+          </button> */}
           <LazyImage
             className={
               isFocused ? `focused ${$isNodeSelection(selection) ? "draggable" : ""}` : null

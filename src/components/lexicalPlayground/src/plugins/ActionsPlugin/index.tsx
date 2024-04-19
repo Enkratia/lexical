@@ -132,7 +132,7 @@ export default function ActionsPlugin({ isRichText }: { isRichText: boolean }): 
 
   return (
     <div className="actions">
-      {SUPPORT_SPEECH_RECOGNITION && (
+      {/* {SUPPORT_SPEECH_RECOGNITION && (
         <button
           onClick={() => {
             editor.dispatchCommand(SPEECH_TO_TEXT_COMMAND, !isSpeechToText);
@@ -143,7 +143,7 @@ export default function ActionsPlugin({ isRichText }: { isRichText: boolean }): 
           aria-label={`${isSpeechToText ? "Enable" : "Disable"} speech to text`}>
           <i className="mic" />
         </button>
-      )}
+      )} */}
       <button
         className="action-button import"
         onClick={() => importFile(editor)}
@@ -175,7 +175,7 @@ export default function ActionsPlugin({ isRichText }: { isRichText: boolean }): 
         aria-label="Clear editor contents">
         <i className="clear" />
       </button>
-      <button
+      {/* <button
         className={`action-button ${!isEditable ? "unlock" : "lock"}`}
         onClick={() => {
           // Send latest editor state to commenting validation server
@@ -187,14 +187,14 @@ export default function ActionsPlugin({ isRichText }: { isRichText: boolean }): 
         title="Read-Only Mode"
         aria-label={`${!isEditable ? "Unlock" : "Lock"} read-only mode`}>
         <i className={!isEditable ? "unlock" : "lock"} />
-      </button>
-      <button
+      </button> */}
+      {/* <button
         className="action-button"
         onClick={handleMarkdownToggle}
         title="Convert From Markdown"
         aria-label="Convert from markdown">
         <i className="markdown" />
-      </button>
+      </button> */}
       {isCollabActive && (
         <button
           className="action-button connect"
