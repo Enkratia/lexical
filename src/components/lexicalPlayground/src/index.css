@@ -1798,3 +1798,10 @@ hr.selected {
   margin-bottom: 10px;
   width: 100%;
 }
+
+
+/* ** */
+div[data-lexical-layout-container] {
+  display: grid;
+  gap: 10px;
+}

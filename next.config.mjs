@@ -15,6 +15,13 @@ const nextConfig = {
       //   port: "",
       //   pathname: "/**",
       // },
+      // https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw4UeEjjERyEVTOIaXIKHlj7snPZAKulH5-z1Kau1lsw&s
+      {
+        protocol: "https",
+        hostname: "encrypted-tbn0.gstatic.com",
+        port: "",
+        pathname: "/images/**",
+      },
       {
         protocol: "http",
         hostname: "localhost",

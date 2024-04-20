@@ -46,6 +46,8 @@
     "@tiptap/react": "^2.3.0",
     "@tiptap/starter-kit": "^2.3.0",
     "eslint": "^8.55.0",
+    "html-react-parser": "^5.1.10",
+    "html-to-react": "^1.7.0",
     "katex": "^0.16.10",
     "lexical": "^0.14.5",
     "lodash-es": "^4.17.21",

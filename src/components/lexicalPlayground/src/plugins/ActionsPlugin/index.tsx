@@ -195,7 +195,7 @@ export default function ActionsPlugin({ isRichText }: { isRichText: boolean }): 
         aria-label="Convert from markdown">
         <i className="markdown" />
       </button> */}
-      {isCollabActive && (
+      {/* {isCollabActive && (
         <button
           className="action-button connect"
           onClick={() => {
@@ -207,7 +207,7 @@ export default function ActionsPlugin({ isRichText }: { isRichText: boolean }): 
           } a collaborative editing server`}>
           <i className={connected ? "disconnect" : "connect"} />
         </button>
-      )}
+      )} */}
       {modal}
     </div>
   );

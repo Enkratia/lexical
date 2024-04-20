@@ -439,3 +439,26 @@
   border: 1px dashed #ddd;
   padding: 8px 16px;
 }
+
+/* // ** */
+.PlaygroundEditorTheme__layoutItem .PlaygroundEditorTheme__paragraph {
+  position: relative;
+}
+
+.PlaygroundEditorTheme__layoutItem [data-lexical-decorator] {
+  position: revert !important;
+  display: block !important;
+  overflow: hidden;
+  border-radius: 16px;
+  padding-top: 92.94%;
+  /* pointer-events: none; */
+}
+
+.PlaygroundEditorTheme__layoutItem img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}

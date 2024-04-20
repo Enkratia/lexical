@@ -76,7 +76,7 @@ function LazyImage({
     <img
       className={className || undefined}
       src={src}
-      alt={altText}
+      // alt={altText}
       ref={imageRef}
       data-position={position}
       style={{
@@ -189,7 +189,6 @@ export default function InlineImageComponent({
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
   const [editor] = useLexicalComposerContext();
-  console.log("text");
   const [selection, setSelection] = useState<BaseSelection | null>(null);
   const activeEditorRef = useRef<LexicalEditor | null>(null);
 
@@ -343,7 +342,7 @@ export default function InlineImageComponent({
             position={position}
           />
         </div>
-        {showCaption && (
+        {/* {showCaption && (
           <div className="image-caption-container">
             <LexicalNestedComposer initialEditor={caption}>
               <AutoFocusPlugin />
@@ -359,7 +358,7 @@ export default function InlineImageComponent({
               />
             </LexicalNestedComposer>
           </div>
-        )}
+        )} */}
       </>
       {modal}
     </Suspense>
