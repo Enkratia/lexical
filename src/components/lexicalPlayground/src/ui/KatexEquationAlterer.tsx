@@ -70,7 +70,7 @@ export default function KatexEquationAlterer({
         </ErrorBoundary>
       </div>
       <div className="KatexEquationAlterer_dialogActions">
-        <Button onClick={onClick}>Confirm</Button>
+        <Button onClick={onClick}>Готово</Button>
       </div>
     </>
   );

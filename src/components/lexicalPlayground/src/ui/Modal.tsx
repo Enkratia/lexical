@@ -6,11 +6,11 @@
  *
  */
 
-import './Modal.css';
+import "./Modal.css";
 
-import * as React from 'react';
-import {ReactNode, useEffect, useRef} from 'react';
-import {createPortal} from 'react-dom';
+import * as React from "react";
+import { ReactNode, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 function PortalImpl({
   onClose,
@@ -34,7 +34,7 @@ function PortalImpl({
   useEffect(() => {
     let modalOverlayElement: HTMLElement | null = null;
     const handler = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         onClose();
       }
     };
@@ -52,16 +52,16 @@ function PortalImpl({
     if (modelElement !== null) {
       modalOverlayElement = modelElement.parentElement;
       if (modalOverlayElement !== null) {
-        modalOverlayElement.addEventListener('click', clickOutsideHandler);
+        modalOverlayElement.addEventListener("click", clickOutsideHandler);
       }
     }
 
-    window.addEventListener('keydown', handler);
+    window.addEventListener("keydown", handler);
 
     return () => {
-      window.removeEventListener('keydown', handler);
+      window.removeEventListener("keydown", handler);
       if (modalOverlayElement !== null) {
-        modalOverlayElement?.removeEventListener('click', clickOutsideHandler);
+        modalOverlayElement?.removeEventListener("click", clickOutsideHandler);
       }
     };
   }, [closeOnClickOutside, onClose]);
@@ -75,7 +75,7 @@ function PortalImpl({
           aria-label="Close modal"
           type="button"
           onClick={onClose}>
-          X
+          &#10799;
         </button>
         <div className="Modal__content">{children}</div>
       </div>
@@ -95,10 +95,7 @@ export default function Modal({
   title: string;
 }): JSX.Element {
   return createPortal(
-    <PortalImpl
-      onClose={onClose}
-      title={title}
-      closeOnClickOutside={closeOnClickOutside}>
+    <PortalImpl onClose={onClose} title={title} closeOnClickOutside={closeOnClickOutside}>
       {children}
     </PortalImpl>,
     document.body,

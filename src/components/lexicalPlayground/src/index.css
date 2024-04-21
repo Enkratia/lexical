@@ -752,6 +752,11 @@ i.page-break,
   max-width: 250px;
   min-width: 100px;
 }
+.dropdown .item.disabled {
+  opacity: 0.1;
+  pointer-events: none;
+  user-select: none;
+}
 
 .dropdown .item.fontsize-item,
 .dropdown .item.fontsize-item .text {

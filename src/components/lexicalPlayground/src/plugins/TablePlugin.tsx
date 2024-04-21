@@ -130,7 +130,7 @@ export function InsertTableDialog({
       />
       <DialogActions data-test-id="table-model-confirm-insert">
         <Button disabled={isDisabled} onClick={onClick}>
-          Confirm
+          Готово
         </Button>
       </DialogActions>
     </>

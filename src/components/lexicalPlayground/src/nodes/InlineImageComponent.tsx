@@ -124,7 +124,7 @@ export function UpdateInlineImageDialog({
 
   return (
     <>
-      <div style={{ marginBottom: "1em" }}>
+      {/* <div style={{ marginBottom: "1em" }}>
         <TextInput
           label="Alt Text"
           placeholder="Descriptive alternative text"
@@ -132,7 +132,7 @@ export function UpdateInlineImageDialog({
           value={altText}
           data-test-id="image-modal-alt-text-input"
         />
-      </div>
+      </div> */}
 
       <Select
         style={{ marginBottom: "1em", width: "208px" }}
@@ -158,7 +158,7 @@ export function UpdateInlineImageDialog({
 
       <DialogActions>
         <Button data-test-id="image-modal-file-upload-btn" onClick={() => handleOnConfirm()}>
-          Confirm
+          Готово
         </Button>
       </DialogActions>
     </>
@@ -257,7 +257,11 @@ export default function InlineImageComponent({
     const unregister = mergeRegister(
       editor.registerUpdateListener(({ editorState }) => {
         if (isMounted) {
-          setSelection(editorState.read(() => $getSelection()));
+          setSelection(
+            editorState.read(() => {
+              return $getSelection();
+            }),
+          );
         }
       }),
       editor.registerCommand(

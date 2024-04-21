@@ -107,7 +107,7 @@ export function InsertInlineImageDialog({
     <>
       <div style={{ marginBottom: "1em" }}>
         <FileInput
-          label="Image Upload"
+          label="Загрузить изображение"
           onChange={loadImage}
           accept="image/*"
           data-test-id="image-modal-file-upload"
@@ -150,7 +150,7 @@ export function InsertInlineImageDialog({
           data-test-id="image-modal-file-upload-btn"
           disabled={isDisabled}
           onClick={() => handleOnClick()}>
-          Confirm
+          Готово
         </Button>
       </DialogActions>
     </>

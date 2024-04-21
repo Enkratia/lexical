@@ -147,7 +147,7 @@ export default function ActionsPlugin({ isRichText }: { isRichText: boolean }): 
       <button
         className="action-button import"
         onClick={() => importFile(editor)}
-        title="Import"
+        title="Импорт"
         aria-label="Import editor state from JSON">
         <i className="import" />
       </button>
@@ -159,7 +159,7 @@ export default function ActionsPlugin({ isRichText }: { isRichText: boolean }): 
             source: "Playground",
           })
         }
-        title="Export"
+        title="Экспорт"
         aria-label="Export editor state to JSON">
         <i className="export" />
       </button>
@@ -167,11 +167,11 @@ export default function ActionsPlugin({ isRichText }: { isRichText: boolean }): 
         className="action-button clear"
         disabled={isEditorEmpty}
         onClick={() => {
-          showModal("Clear editor", (onClose) => (
+          showModal("Очистить редактор", (onClose) => (
             <ShowClearDialog editor={editor} onClose={onClose} />
           ));
         }}
-        title="Clear"
+        title="Очистить"
         aria-label="Clear editor contents">
         <i className="clear" />
       </button>
@@ -222,7 +222,8 @@ function ShowClearDialog({
 }): JSX.Element {
   return (
     <>
-      Are you sure you want to clear the editor?
+      {/* Are you sure you want to clear the editor? */}
+      Вы уверены, что хотите очистить редактор?
       <div className="Modal__content">
         <Button
           onClick={() => {
@@ -230,14 +231,14 @@ function ShowClearDialog({
             editor.focus();
             onClose();
           }}>
-          Clear
+          Очистить
         </Button>{" "}
         <Button
           onClick={() => {
             editor.focus();
             onClose();
           }}>
-          Cancel
+          Отменить
         </Button>
       </div>
     </>

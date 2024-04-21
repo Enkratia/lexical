@@ -435,23 +435,38 @@
   gap: 10px;
   margin: 10px 0;
 }
+
+/* ** */
 .PlaygroundEditorTheme__layoutItem {
+  /* display: flex;
+  align-items: center; */
+  display: grid;
+  align-content: center;
   border: 1px dashed #ddd;
-  padding: 8px 16px;
+  padding: 8px 8px;
+  border-radius: 16px;
 }
 
-/* // ** */
+/* ** */
 .PlaygroundEditorTheme__layoutItem .PlaygroundEditorTheme__paragraph {
+  /* align-self: center; */
   position: relative;
+  /* overflow: hidden; */
+
+  /* font-size: 16px; */
 }
 
 .PlaygroundEditorTheme__layoutItem [data-lexical-decorator] {
   position: revert !important;
   display: block !important;
   overflow: hidden;
-  border-radius: 16px;
+  margin: 0 !important;
   padding-top: 92.94%;
   /* pointer-events: none; */
+}
+
+.PlaygroundEditorTheme__paragraph img {
+  border-radius: 16px;
 }
 
 .PlaygroundEditorTheme__layoutItem img {

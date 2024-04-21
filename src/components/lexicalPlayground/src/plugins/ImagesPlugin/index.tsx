@@ -58,25 +58,25 @@ export function InsertImageUriDialogBody({
   return (
     <>
       <TextInput
-        label="Image URL"
-        placeholder="i.e. https://source.unsplash.com/random"
+        label="URL ссылка"
+        placeholder="https://..."
         onChange={setSrc}
         value={src}
         data-test-id="image-modal-url-input"
       />
-      <TextInput
+      {/* <TextInput
         label="Alt Text"
         placeholder="Random unsplash image"
         onChange={setAltText}
         value={altText}
         data-test-id="image-modal-alt-text-input"
-      />
+      /> */}
       <DialogActions>
         <Button
           data-test-id="image-modal-confirm-btn"
           disabled={isDisabled}
           onClick={() => onClick({ altText, src })}>
-          Confirm
+          Готово
         </Button>
       </DialogActions>
     </>
@@ -109,24 +109,24 @@ export function InsertImageUploadedDialogBody({
   return (
     <>
       <FileInput
-        label="Image Upload"
+        label="Загрузить изображение"
         onChange={loadImage}
         accept="image/*"
         data-test-id="image-modal-file-upload"
       />
-      <TextInput
+      {/* <TextInput
         label="Alt Text"
         placeholder="Descriptive alternative text"
         onChange={setAltText}
         value={altText}
         data-test-id="image-modal-alt-text-input"
-      />
+      /> */}
       <DialogActions>
         <Button
           data-test-id="image-modal-file-upload-btn"
           disabled={isDisabled}
           onClick={() => onClick({ altText, src })}>
-          Confirm
+          Готово
         </Button>
       </DialogActions>
     </>
@@ -163,7 +163,7 @@ export function InsertImageDialog({
     <>
       {!mode && (
         <DialogButtonsList>
-          <Button
+          {/* <Button
             data-test-id="image-modal-option-sample"
             onClick={() =>
               onClick(
@@ -180,12 +180,12 @@ export function InsertImageDialog({
               )
             }>
             Sample
-          </Button>
+          </Button> */}
           <Button data-test-id="image-modal-option-url" onClick={() => setMode("url")}>
-            URL
+            Ссылка
           </Button>
           <Button data-test-id="image-modal-option-file" onClick={() => setMode("file")}>
-            File
+            Файл
           </Button>
         </DialogButtonsList>
       )}

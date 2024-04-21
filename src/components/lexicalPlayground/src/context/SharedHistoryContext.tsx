@@ -20,7 +20,6 @@ const Context: React.Context<ContextShape> = createContext({});
 
 export const SharedHistoryContext = ({ children }: { children: ReactNode }): JSX.Element => {
   const historyContext = useMemo(() => ({ historyState: createEmptyHistoryState() }), []);
-  console.log(historyContext);
 
   return <Context.Provider value={historyContext}>{children}</Context.Provider>;
 };

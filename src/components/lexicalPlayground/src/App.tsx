@@ -98,11 +98,11 @@ export function App(): JSX.Element {
         <SharedHistoryContext>
           <TableContext>
             <SharedAutocompleteContext>
-              <header>
+              {/* <header>
                 <a href="https://lexical.dev" target="_blank" rel="noreferrer">
                   <img src={logo} alt="Lexical Logo" />
                 </a>
-              </header>
+              </header> */}
               <div className="editor-shell">
                 <Editor />
               </div>
@@ -112,7 +112,7 @@ export function App(): JSX.Element {
         <HtmlPlugin onHtmlChanged={(html) => setContent(html)} initialHtml="" />
       </LexicalComposer>
 
-      <div
+      {/* <div
         style={{
           maxWidth: "1100px",
           marginInline: "auto",
@@ -129,7 +129,7 @@ export function App(): JSX.Element {
           wordBreak: "break-word",
         }}>
         {test2}
-      </div>
+      </div> */}
     </>
   );
 }

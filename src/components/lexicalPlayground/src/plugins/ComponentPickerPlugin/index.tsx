@@ -271,7 +271,7 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
       icon: <i className="icon image" />,
       keywords: ["image", "photo", "picture", "file"],
       onSelect: () =>
-        showModal("Insert Image", (onClose) => (
+        showModal("Добавить изображение", (onClose) => (
           <InsertImageDialog activeEditor={editor} onClose={onClose} />
         )),
     }),
@@ -284,7 +284,7 @@ function getBaseOptions(editor: LexicalEditor, showModal: ShowModal) {
       icon: <i className="icon columns" />,
       keywords: ["columns", "layout", "grid"],
       onSelect: () =>
-        showModal("Insert Columns Layout", (onClose) => (
+        showModal("Добавить колонки", (onClose) => (
           <InsertLayoutDialog activeEditor={editor} onClose={onClose} />
         )),
     }),

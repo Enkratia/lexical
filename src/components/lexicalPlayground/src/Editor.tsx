@@ -124,6 +124,7 @@ export default function Editor(): JSX.Element {
     <>
       {isRichText && <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} />}
       <div
+        // onSelect={onContainerSelect}
         className={`editor-container ${showTreeView ? "tree-view" : ""} ${
           !isRichText ? "plain-text" : ""
         }`}>

@@ -39,6 +39,7 @@ export const SharedAutocompleteContext = ({ children }: { children: ReactNode })
       },
     ];
   }, []);
+
   return <Context.Provider value={context}>{children}</Context.Provider>;
 };
 

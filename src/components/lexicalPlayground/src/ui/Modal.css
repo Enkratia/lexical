@@ -53,6 +53,10 @@
   text-align: center;
   cursor: pointer;
   background-color: #eee;
+  font-size: 22px;
+  line-height: 0;
+  transition: background-color 0.3s;
+  padding-bottom: 1px;
 }
 .Modal__closeButton:hover {
   background-color: #ddd;

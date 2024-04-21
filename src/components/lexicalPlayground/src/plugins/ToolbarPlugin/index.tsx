@@ -54,11 +54,15 @@ import {
   $isRangeSelection,
   $isRootOrShadowRoot,
   $isTextNode,
+  BLUR_COMMAND,
+  BaseSelection,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
   COMMAND_PRIORITY_CRITICAL,
+  COMMAND_PRIORITY_LOW,
   COMMAND_PRIORITY_NORMAL,
   ElementFormatType,
+  FOCUS_COMMAND,
   FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   INDENT_CONTENT_COMMAND,
@@ -92,20 +96,21 @@ import { INSERT_PAGE_BREAK } from "../PageBreakPlugin";
 import { InsertPollDialog } from "../PollPlugin";
 import { InsertTableDialog } from "../TablePlugin";
 import FontSize from "./fontSize";
+import { useEditorFocus } from "../../hooks/useEditorFocus";
 
 const blockTypeToBlockName = {
-  bullet: "Bulleted List",
+  bullet: "Маркированный список",
   check: "Check List",
   code: "Code Block",
   h1: "Heading",
-  h2: "Heading",
-  h3: "Heading",
+  h2: "Заголовок H2",
+  h3: "Заголовок H3",
   h4: "Heading",
   h5: "Heading",
   h6: "Heading",
-  number: "Numbered List",
-  paragraph: "Normal",
-  quote: "Quote",
+  number: "Нумерованный список",
+  paragraph: "Обычное",
+  quote: "Циатата",
 };
 
 const rootTypeToRootName = {
@@ -158,7 +163,7 @@ const ELEMENT_FORMAT_OPTIONS: {
   center: {
     icon: "center-align",
     iconRTL: "center-align",
-    name: "Center Align",
+    name: "По центру",
   },
   end: {
     icon: "right-align",
@@ -168,17 +173,17 @@ const ELEMENT_FORMAT_OPTIONS: {
   justify: {
     icon: "justify-align",
     iconRTL: "justify-align",
-    name: "Justify Align",
+    name: "По ширине",
   },
   left: {
     icon: "left-align",
     iconRTL: "left-align",
-    name: "Left Align",
+    name: "По левому краю",
   },
   right: {
     icon: "right-align",
     iconRTL: "right-align",
-    name: "Right Align",
+    name: "По правому краю",
   },
   start: {
     icon: "left-align",
@@ -206,6 +211,37 @@ function BlockFormatDropDown({
   editor: LexicalEditor;
   disabled?: boolean;
 }): JSX.Element {
+  const [isInColumn, setIsInColumn] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const unregister = mergeRegister(
+      editor.registerUpdateListener(({ editorState }) => {
+        if (isMounted) {
+          setIsInColumn(
+            editorState.read(() => {
+              // @ts-ignore
+              const anchorKey = $getSelection()?.anchor?.key;
+
+              if (anchorKey) {
+                const anchorEl = editor.getElementByKey(anchorKey);
+                return !!anchorEl?.closest(".PlaygroundEditorTheme__layoutItem");
+              }
+
+              return false;
+            }),
+          );
+        }
+      }),
+    );
+
+    return () => {
+      isMounted = false;
+      unregister();
+    };
+  }, [editor]);
+
   const formatParagraph = () => {
     editor.update(() => {
       const selection = $getSelection();
@@ -290,7 +326,7 @@ function BlockFormatDropDown({
         className={"item " + dropDownActiveClass(blockType === "paragraph")}
         onClick={formatParagraph}>
         <i className="icon paragraph" />
-        <span className="text">Normal</span>
+        <span className="text">Обычное</span>
       </DropDownItem>
       {/* <DropDownItem
         className={"item " + dropDownActiveClass(blockType === "h1")}
@@ -302,8 +338,16 @@ function BlockFormatDropDown({
         className={"item " + dropDownActiveClass(blockType === "h2")}
         onClick={() => formatHeading("h2")}>
         <i className="icon h2" />
-        <span className="text">Heading</span>
+        <span className="text">Заголовок H2</span>
       </DropDownItem>
+      {isInColumn && (
+        <DropDownItem
+          className={"item " + dropDownActiveClass(blockType === "h3")}
+          onClick={() => formatHeading("h3")}>
+          <i className="icon h3" />
+          <span className="text">Заголовок H3</span>
+        </DropDownItem>
+      )}
       {/* <DropDownItem
         className={"item " + dropDownActiveClass(blockType === "h3")}
         onClick={() => formatHeading("h3")}>
@@ -314,13 +358,13 @@ function BlockFormatDropDown({
         className={"item " + dropDownActiveClass(blockType === "bullet")}
         onClick={formatBulletList}>
         <i className="icon bullet-list" />
-        <span className="text">Bullet List</span>
+        <span className="text">Маркированный список</span>
       </DropDownItem>
       <DropDownItem
         className={"item " + dropDownActiveClass(blockType === "number")}
         onClick={formatNumberedList}>
         <i className="icon numbered-list" />
-        <span className="text">Numbered List</span>
+        <span className="text">Нумерованный список</span>
       </DropDownItem>
       {/* <DropDownItem
         className={"item " + dropDownActiveClass(blockType === "check")}
@@ -332,7 +376,7 @@ function BlockFormatDropDown({
         className={"item " + dropDownActiveClass(blockType === "quote")}
         onClick={formatQuote}>
         <i className="icon quote" />
-        <span className="text">Quote</span>
+        <span className="text">Цитата</span>
       </DropDownItem>
       {/* <DropDownItem
         className={"item " + dropDownActiveClass(blockType === "code")}
@@ -425,7 +469,7 @@ function ElementFormatDropdown({
         }}
         className="item">
         <i className="icon left-align" />
-        <span className="text">Left Align</span>
+        <span className="text">По левому краю</span>
       </DropDownItem>
       <DropDownItem
         onClick={() => {
@@ -433,7 +477,7 @@ function ElementFormatDropdown({
         }}
         className="item">
         <i className="icon center-align" />
-        <span className="text">Center Align</span>
+        <span className="text">По центру</span>
       </DropDownItem>
       <DropDownItem
         onClick={() => {
@@ -441,7 +485,7 @@ function ElementFormatDropdown({
         }}
         className="item">
         <i className="icon right-align" />
-        <span className="text">Right Align</span>
+        <span className="text">По правому краю</span>
       </DropDownItem>
       <DropDownItem
         onClick={() => {
@@ -449,7 +493,7 @@ function ElementFormatDropdown({
         }}
         className="item">
         <i className="icon justify-align" />
-        <span className="text">Justify Align</span>
+        <span className="text">По ширине</span>
       </DropDownItem>
       {/* <DropDownItem
         onClick={() => {
@@ -525,6 +569,20 @@ export default function ToolbarPlugin({
   const [isRTL, setIsRTL] = useState(false);
   const [codeLanguage, setCodeLanguage] = useState<string>("");
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
+
+  const [isImgFocused, setisImgFocused] = useState(false);
+
+  // **
+  const onDropdownClick = () => {
+    const focusedImage = document.querySelector("img.focused.draggable");
+
+    if (focusedImage) {
+      setisImgFocused(true);
+      return;
+    }
+
+    setisImgFocused(false);
+  };
 
   const $updateToolbar = useCallback(() => {
     const selection = $getSelection();
@@ -695,6 +753,37 @@ export default function ToolbarPlugin({
     [activeEditor],
   );
 
+  // **
+  const [isInColumn, setIsInColumn] = useState(false);
+  useEffect(() => {
+    let isMounted = true;
+
+    const unregister = mergeRegister(
+      editor.registerUpdateListener(({ editorState }) => {
+        if (isMounted) {
+          setIsInColumn(
+            editorState.read(() => {
+              // @ts-ignore
+              const anchorKey = $getSelection()?.anchor?.key;
+
+              if (anchorKey) {
+                const el = editor.getElementByKey(anchorKey);
+                return !!el?.closest(".PlaygroundEditorTheme__layoutItem");
+              }
+
+              return false;
+            }),
+          );
+        }
+      }),
+    );
+
+    return () => {
+      isMounted = false;
+      unregister();
+    };
+  }, [editor]);
+
   const clearFormatting = useCallback(() => {
     activeEditor.update(() => {
       const selection = $getSelection();
@@ -798,7 +887,7 @@ export default function ToolbarPlugin({
         onClick={() => {
           activeEditor.dispatchCommand(UNDO_COMMAND, undefined);
         }}
-        title={IS_APPLE ? "Undo (⌘Z)" : "Undo (Ctrl+Z)"}
+        title={IS_APPLE ? "Отменить (⌘Z)" : "Отменить (Ctrl+Z)"}
         type="button"
         className="toolbar-item spaced"
         aria-label="Undo">
@@ -809,7 +898,7 @@ export default function ToolbarPlugin({
         onClick={() => {
           activeEditor.dispatchCommand(REDO_COMMAND, undefined);
         }}
-        title={IS_APPLE ? "Redo (⌘Y)" : "Redo (Ctrl+Y)"}
+        title={IS_APPLE ? "Повторить (⌘Y)" : "Повторить (Ctrl+Y)"}
         type="button"
         className="toolbar-item"
         aria-label="Redo">
@@ -853,15 +942,15 @@ export default function ToolbarPlugin({
             editor={editor}
           /> */}
       {/* <Divider /> */}
-      <FontSize selectionFontSize={fontSize.slice(0, -2)} editor={editor} disabled={!isEditable} />
-      <Divider />
+      {/* <FontSize selectionFontSize={fontSize.slice(0, -2)} editor={editor} disabled={!isEditable} /> */}
+      {/* <Divider /> */}
       <button
         disabled={!isEditable}
         onClick={() => {
           activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
         }}
         className={"toolbar-item spaced " + (isBold ? "active" : "")}
-        title={IS_APPLE ? "Bold (⌘B)" : "Bold (Ctrl+B)"}
+        title={IS_APPLE ? "Полужирный (⌘B)" : "Полужирный (Ctrl+B)"}
         type="button"
         aria-label={`Format text as bold. Shortcut: ${IS_APPLE ? "⌘B" : "Ctrl+B"}`}>
         <i className="format bold" />
@@ -872,7 +961,7 @@ export default function ToolbarPlugin({
           activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
         }}
         className={"toolbar-item spaced " + (isItalic ? "active" : "")}
-        title={IS_APPLE ? "Italic (⌘I)" : "Italic (Ctrl+I)"}
+        title={IS_APPLE ? "Курсив (⌘I)" : "Курсив (Ctrl+I)"}
         type="button"
         aria-label={`Format text as italics. Shortcut: ${IS_APPLE ? "⌘I" : "Ctrl+I"}`}>
         <i className="format italic" />
@@ -883,7 +972,7 @@ export default function ToolbarPlugin({
           activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
         }}
         className={"toolbar-item spaced " + (isUnderline ? "active" : "")}
-        title={IS_APPLE ? "Underline (⌘U)" : "Underline (Ctrl+U)"}
+        title={IS_APPLE ? "Подчеркнутый (⌘U)" : "Подчеркнутый (Ctrl+U)"}
         type="button"
         aria-label={`Format text to underlined. Shortcut: ${IS_APPLE ? "⌘U" : "Ctrl+U"}`}>
         <i className="format underline" />
@@ -904,7 +993,7 @@ export default function ToolbarPlugin({
         onClick={insertLink}
         className={"toolbar-item spaced " + (isLink ? "active" : "")}
         aria-label="Insert link"
-        title="Insert link"
+        title="Добавить ссылку"
         type="button">
         <i className="format link" />
       </button>
@@ -940,7 +1029,7 @@ export default function ToolbarPlugin({
           title="Strikethrough"
           aria-label="Format text with a strikethrough">
           <i className="icon strikethrough" />
-          <span className="text">Strikethrough</span>
+          <span className="text">Зачеркнутый</span>
         </DropDownItem>
         <DropDownItem
           onClick={() => {
@@ -950,7 +1039,7 @@ export default function ToolbarPlugin({
           title="Subscript"
           aria-label="Format text with a subscript">
           <i className="icon subscript" />
-          <span className="text">Subscript</span>
+          <span className="text">Подстрочный индекс</span>
         </DropDownItem>
         <DropDownItem
           onClick={() => {
@@ -960,7 +1049,7 @@ export default function ToolbarPlugin({
           title="Superscript"
           aria-label="Format text with a superscript">
           <i className="icon superscript" />
-          <span className="text">Superscript</span>
+          <span className="text">Надстрочный индекс</span>
         </DropDownItem>
         <DropDownItem
           onClick={clearFormatting}
@@ -968,24 +1057,25 @@ export default function ToolbarPlugin({
           title="Clear text formatting"
           aria-label="Clear all text formatting">
           <i className="icon clear" />
-          <span className="text">Clear Formatting</span>
+          <span className="text">Очистить форматирование</span>
         </DropDownItem>
       </DropDown>
       <Divider />
       <DropDown
+        onChange={onDropdownClick}
         disabled={!isEditable}
         buttonClassName="toolbar-item spaced"
-        buttonLabel="Insert"
+        buttonLabel="Добавить"
         buttonAriaLabel="Insert specialized editor node"
         buttonIconClassName="icon plus">
-        <DropDownItem
+        {/* <DropDownItem
           onClick={() => {
             activeEditor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
           }}
           className="item">
           <i className="icon horizontal-rule" />
-          <span className="text">Horizontal Rule</span>
-        </DropDownItem>
+          <span className="text">Гор. разделение</span>
+        </DropDownItem> */}
         {/* <DropDownItem
           onClick={() => {
             activeEditor.dispatchCommand(INSERT_PAGE_BREAK, undefined);
@@ -994,25 +1084,37 @@ export default function ToolbarPlugin({
           <i className="icon page-break" />
           <span className="text">Page Break</span>
         </DropDownItem> */}
+
         <DropDownItem
           onClick={() => {
-            showModal("Insert Image", (onClose) => (
+            showModal("Добавить изображение", (onClose) => (
+              <InsertImageDialog activeEditor={activeEditor} onClose={onClose} />
+            ));
+          }}
+          className={`item ${isInColumn || isImgFocused ? "disabled" : ""}`}>
+          <i className="icon image" />
+          <span className="text">Изображение</span>
+        </DropDownItem>
+
+        {/* <DropDownItem
+          onClick={() => {
+            showModal("Добавить изображение", (onClose) => (
               <InsertImageDialog activeEditor={activeEditor} onClose={onClose} />
             ));
           }}
           className="item">
           <i className="icon image" />
-          <span className="text">Image</span>
-        </DropDownItem>
+          <span className="text">Изображение</span>
+        </DropDownItem> */}
         <DropDownItem
           onClick={() => {
-            showModal("Insert Inline Image", (onClose) => (
+            showModal("Добавить инлайн изображение", (onClose) => (
               <InsertInlineImageDialog activeEditor={activeEditor} onClose={onClose} />
             ));
           }}
           className="item">
           <i className="icon image" />
-          <span className="text">Inline Image</span>
+          <span className="text">Инлайн изображение</span>
         </DropDownItem>
         {/* <DropDownItem
           onClick={() =>
@@ -1054,15 +1156,16 @@ export default function ToolbarPlugin({
           <i className="icon poll" />
           <span className="text">Poll</span>
         </DropDownItem> */}
+
         <DropDownItem
           onClick={() => {
-            showModal("Insert Columns Layout", (onClose) => (
+            showModal("Добавить колонки", (onClose) => (
               <InsertLayoutDialog activeEditor={activeEditor} onClose={onClose} />
             ));
           }}
-          className="item">
+          className={`item ${isInColumn || isImgFocused ? "disabled" : ""}`}>
           <i className="icon columns" />
-          <span className="text">Columns Layout</span>
+          <span className="text">Колонки</span>
         </DropDownItem>
 
         {/* <DropDownItem
