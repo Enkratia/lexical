@@ -38,7 +38,7 @@ export function App(): JSX.Element {
     theme: PlaygroundEditorTheme,
   };
 
-  const test2 = parse(content, {
+  const html = parse(content, {
     replace: (domNode) => {
       if ("name" in domNode && domNode.name === "img") {
         const imgGrandParent = domNode?.parent?.parent;
@@ -50,7 +50,7 @@ export function App(): JSX.Element {
                 style={{
                   maxWidth: "100%",
                   position: "relative",
-                  paddingTop: "100%",
+                  paddingTop: "92.94%",
                 }}>
                 <Image
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw4UeEjjERyEVTOIaXIKHlj7snPZAKulH5-z1Kau1lsw&s"
@@ -119,17 +119,18 @@ export function App(): JSX.Element {
           padding: "30px",
           wordBreak: "break-word",
         }}
-        dangerouslySetInnerHTML={{ __html: content }}></div>
+        dangerouslySetInnerHTML={{ __html: content }}></div> */}
 
       <div
+        data-editor-dev={false}
         style={{
           maxWidth: "1100px",
           marginInline: "auto",
-          padding: "30px",
+          // padding: "30px",
           wordBreak: "break-word",
         }}>
-        {test2}
-      </div> */}
+        {html}
+      </div>
     </>
   );
 }
